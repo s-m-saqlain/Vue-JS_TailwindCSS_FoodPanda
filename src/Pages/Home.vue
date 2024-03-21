@@ -28,7 +28,6 @@ export default {
     Carts,
     Second_Banner,
     Footer,
-    Registeration,
   },
 };
 
