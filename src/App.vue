@@ -3,6 +3,7 @@
     <RouterLink to="/"></RouterLink>
     <RouterLink to="/Login"></RouterLink>
     <RouterLink to="/Registeration"></RouterLink>
+    <RouterLink to="/Profile"></RouterLink>
   </nav>
   <main>
     <RouterView />
