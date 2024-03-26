@@ -32,22 +32,29 @@
         </div>
         <div class="flex items-center">
           <div class="flex items-center ms-3">
-            <div v-if="parsedData" class="flex justify-center items-center gap-2">
-                <span class="sr-only">Open user menu</span>
-                <img
-                  class="w-[60px] h-12 "
-                  :src="'https://foodpanda55.pythonanywhere.com/'+parsedData.payload.profile"
-                  alt="user photo"
-                />
-                <div>
-                  <p class="text-2xl font-semibold text-orange-500">Hey {{ parsedData.payload.first_name }} {{ parsedData.payload.last_name }}</p>
-                </div>
-              
+            <div
+              v-if="parsedData"
+              class="flex justify-center items-center gap-2"
+            >
+              <span class="sr-only">Open user menu</span>
+              <img
+                class="w-[60px] h-12"
+                :src="
+                  'https://foodpanda55.pythonanywhere.com/' +
+                  parsedData.payload.profile
+                "
+                alt="user photo"
+              />
+              <div>
+                <p class="text-2xl font-semibold text-orange-500">
+                  Hey {{ parsedData.payload.first_name }}
+                  {{ parsedData.payload.last_name }}
+                </p>
+              </div>
             </div>
             <div v-else>
               <p>No data found in local storage or unable to parse data.</p>
             </div>
-            
           </div>
         </div>
       </div>
@@ -61,7 +68,7 @@
   >
     <div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
       <ul class="space-y-2 font-medium">
-        <li>
+        <!-- <li >
           <a
             href="#Profile"
             class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
@@ -82,10 +89,10 @@
             </svg>
             <span class="ms-3">Home</span>
           </a>
-        </li>
-        <li>
+        </li> -->
+        <li @click="activeComponent = 'UserProfile'">
           <a
-            href="#Profile"
+            href="#UserProfile"
             class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
           >
             <svg
@@ -102,7 +109,7 @@
             <span class="flex-1 ms-3 whitespace-nowrap">Profile</span>
           </a>
         </li>
-        <li>
+        <li @click="activeComponent = 'Category'">
           <a
             href="#Category"
             class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
@@ -121,9 +128,9 @@
             <span class="flex-1 ms-3 whitespace-nowrap">Category</span>
           </a>
         </li>
-         <li>
-          <router-link
-            to="/Change_Password"
+        <li @click="activeComponent = 'ChangePassword'">
+          <a
+            href="#ChangePassword"
             class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
           >
             <svg
@@ -144,7 +151,7 @@
               />
             </svg>
             <span class="flex-1 ms-3 whitespace-nowrap">Change Password</span>
-          </router-link>
+          </a>
         </li>
         <li>
           <a
@@ -173,26 +180,40 @@
     </div>
   </aside>
   <div class="p-4 sm:ml-64">
-   <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
+    <div
+      class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14"
+    >
       <div class="grid grid-cols-3 gap-4 mb-4">
-         <UserProfile />
+        <div v-if="activeComponent === 'UserProfile'">
+          <UserProfile />
+        </div>
+        <div v-if="activeComponent === 'Category'">
+          <Category />
+        </div>
+        <div v-if="activeComponent === 'ChangePassword'">
+          <ChangePassword />
+        </div>
       </div>
-   </div>
-</div>
+    </div>
+  </div>
 </template>
 
 <script>
 import Foodpanda from "../assets/Logo/icon.png";
-import UserProfile from '../components/User_Dashboard/UserProfile.vue'
-
+import UserProfile from "../components/User_Dashboard/UserProfile.vue";
+import ChangePassword from "../components/User_Dashboard/Change_Password.vue";
+import Category from "../components/User_Dashboard/Category.vue";
 export default {
-components: {
-    UserProfile 
+  components: {
+    UserProfile,
+    ChangePassword,
+    Category,
   },
   data() {
     return {
       Foodpanda: Foodpanda,
       parsedData: null,
+      activeComponent: "UserProfile",
     };
   },
   mounted() {
